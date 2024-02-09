@@ -1,0 +1,138 @@
+<!DOCTYPE html
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport"="width=devicewidth, initial-=1.0">
+    <title>Issue Tracker</title>
+    <style>
+        h3{
+            align-items:flex-end;
+        }
+        h1{
+            color: black;
+        }
+        body{
+            background-color: aquamarine;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0; 
+        }
+
+        header {
+            background-color: #18e9e9;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+        .container {
+            background-color: #333;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        #issueForm, #issuesList {
+            width: 45%;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #issueForm {
+            order: 1;
+        }
+        #issuesList {
+            order: 2;
+        }
+        issue {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+            }
+            input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Issue Tracker System</h1>
+    </header>
+    <div class="container">
+        <div id="issueForm">
+            <h2>Create a New Issue</h2>
+            <form id="newIssueForm">
+                <label for="issueTitle">Title:</label>
+                <input type="text" id="issueTitle" required>
+                <label for="issueDescription">Description:</label>
+                <textarea id="issueDescription" required></textarea>
+                <button type="button" onclick="addIssue()">Create Issue</button>
+            </form>
+        </div>
+        <div id="issuesList">
+            <h2>Current Issues</h2>
+            <div id="issueContainer"></div>
+            <div id="deletedit"></div>
+        </div>
+    </div>
+    <script>
+        function addIssue() {
+            const title = document.getElementById('issueTitle').value;
+            const description = document.getElementById('issueDescription').value;
+            const issueListContainer = document.getElementById('issueContainer');
+            const issue = document.createElement('div');
+            issue.classList.add('issue');
+            issue.innerHTML = `
+                <h4>${title}</h4>
+                <p>${description}</p>
+
+               <h3>
+                <button class="delete-button" onclick="deleteIssue(this)">Delete</button><button class="edit-button" onclick="editIssue(this)">Edit</button></h3>
+                
+            `;
+            issueListContainer.appendChild(issue);
+            document.getElementById('issueTitle').value = '';
+            document.getElementById('issueDescription').value = '';
+        }
+        function deleteIssue(button) {
+            const issue = button.parentElement.parentElement;
+            issue.remove();
+        }
+        function editIssue(button) {
+            deleteIssue(button);
+            let editMode= false;
+        if (!editMode) {
+            editMode = true;
+            currentIssueBeingEdited = button.parentElement.parentElement;
+
+            const title = currentIssueBeingEdited.querySelector('h4').innerText;
+            const description = currentIssueBeingEdited.querySelector('p').innerText;
+
+            const issueTitleInput = document.getElementById('issueTitle');
+            const issueDescriptionTextarea = document.getElementById('issueDescription');
+
+            issueTitleInput.value = title;
+            issueDescriptionTextarea.value = description;
+    }
+                }
+        </script>
+</body>
+</html>
